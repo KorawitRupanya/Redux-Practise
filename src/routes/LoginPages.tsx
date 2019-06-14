@@ -1,12 +1,11 @@
 import React from "react";
 import LoginPanel from "../components/LoginPanel";
 import { connect } from "react-redux";
-import { AppState } from "../store/configureStore";
-import { loggedIn } from "../store/system/actions";
 import { RouteComponentProps, withRouter } from "react-router";
+import { login } from "../services/actions";
 
 interface DispatchToProps {
-  loggedIn: (userName: string) => void;
+  login: (userName: string) => void;
 }
 
 type LoginPages = DispatchToProps & RouteComponentProps;
@@ -17,8 +16,8 @@ const LoginPages: React.FunctionComponent<LoginPages> = props => {
     setUserName(event.target.value);
   };
   const handleLogin = (userName: string) => {
-    props.loggedIn(userName);
-    props.history.push("/chat");
+    props.login(userName);
+    // props.history.push("/chat");
   };
   return (
     <div>
@@ -33,7 +32,7 @@ const LoginPages: React.FunctionComponent<LoginPages> = props => {
 
 const mapDispatchToProps = (dispatch: Function): DispatchToProps => {
   return {
-    loggedIn: (userName: string) => dispatch(loggedIn(userName))
+    login: (userName: string) => dispatch(login(userName))
   };
 };
 

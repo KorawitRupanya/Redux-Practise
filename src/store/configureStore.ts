@@ -1,8 +1,8 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 import { systemReducer } from "./system/reducer";
 import { chatReducer } from "./chat/reducer";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { type } from "os";
+import thuckMiddleware from "redux-thunk";
 
 const rootReducer = combineReducers({
   system: systemReducer,
@@ -12,7 +12,12 @@ const rootReducer = combineReducers({
 export type AppState = ReturnType<typeof rootReducer>;
 
 const configureStore = () => {
-  const store = createStore(rootReducer, composeWithDevTools());
+  const middlewears = [thuckMiddleware];
+  const middleWareEnhancer = applyMiddleware(...middlewears);
+  const store = createStore(
+    rootReducer,
+    composeWithDevTools(middleWareEnhancer)
+  );
   return store;
 };
 
